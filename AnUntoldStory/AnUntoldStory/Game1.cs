@@ -12,7 +12,10 @@ namespace AnUntoldStory
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 		Player player;
-		
+
+		KeyboardState currentKeyboardState;
+		KeyboardState previousKeyboardState;
+
 
 		public Game1()
         {
@@ -68,10 +71,39 @@ namespace AnUntoldStory
                 Exit();
 
 			// TODO: Add your update logic here
-			
+			previousKeyboardState = currentKeyboardState;
+			currentKeyboardState = Keyboard.GetState();
+			UpdatePlayer(gameTime);
+
 			base.Update(gameTime);
         }
 
+
+		private void UpdatePlayer(GameTime gameTime)
+		{
+			if (currentKeyboardState.IsKeyDown(Keys.Left))
+			{
+				player.setPositionX(player.getPosition().X - player.getMoveSpeed());
+			}
+
+			if (currentKeyboardState.IsKeyDown(Keys.Right))
+			{
+				player.setPositionX(player.getPosition().X + player.getMoveSpeed());
+			}
+
+			if (currentKeyboardState.IsKeyDown(Keys.Up))
+			{
+				player.setPositionY(player.getPosition().Y - player.getMoveSpeed());
+			}
+
+			if (currentKeyboardState.IsKeyDown(Keys.Down))
+			{
+				player.setPositionY(player.getPosition().Y + player.getMoveSpeed());
+			}
+
+			player.setPositionX(MathHelper.Clamp(player.getPosition().X, 0, GraphicsDevice.Viewport.Width - player.getWidth()));
+			player.setPositionY(MathHelper.Clamp(player.getPosition().Y, 0, GraphicsDevice.Viewport.Height - player.getHeight()));
+		}
 
 		/// <summary>
 		/// This is called when the game should draw itself.
