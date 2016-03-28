@@ -9,15 +9,14 @@ namespace AnUntoldStory
     /// </summary>
     public class Game1 : Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
-		Player player;
+        private GraphicsDeviceManager graphics;
+        private SpriteBatch spriteBatch;
+        private Player player;
 
-		KeyboardState currentKeyboardState;
-		KeyboardState previousKeyboardState;
+        private KeyboardState currentKeyboardState;
+        private KeyboardState previousKeyboardState;
 
-
-		public Game1()
+        public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -33,11 +32,11 @@ namespace AnUntoldStory
         {
             base.Initialize();
 
-			// TODO: Add your initialization logic here
-			player = new Player();
-			Vector2 playerPosition = new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X + GraphicsDevice.Viewport.TitleSafeArea.Width / 2, GraphicsDevice.Viewport.TitleSafeArea.Y + GraphicsDevice.Viewport.TitleSafeArea.Height / 2);
-			player.Initialize(Content.Load<Texture2D>("Sprites\\Player"), playerPosition);
-		}
+            // TODO: Add your initialization logic here
+            player = new Player();
+            Vector2 playerPosition = new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X + GraphicsDevice.Viewport.TitleSafeArea.Width / 2, GraphicsDevice.Viewport.TitleSafeArea.Y + GraphicsDevice.Viewport.TitleSafeArea.Height / 2);
+            player.Initialize(Content.Load<Texture2D>("Sprites\\Player"), playerPosition);
+        }
 
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
@@ -70,55 +69,54 @@ namespace AnUntoldStory
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-			// TODO: Add your update logic here
-			previousKeyboardState = currentKeyboardState;
-			currentKeyboardState = Keyboard.GetState();
-			UpdatePlayer(gameTime);
+            // TODO: Add your update logic here
+            previousKeyboardState = currentKeyboardState;
+            currentKeyboardState = Keyboard.GetState();
+            UpdatePlayer(gameTime);
 
-			base.Update(gameTime);
+            base.Update(gameTime);
         }
 
-
-		private void UpdatePlayer(GameTime gameTime)
-		{
-			if (currentKeyboardState.IsKeyDown(Keys.Left))
-			{
-				player.setPositionX(player.getPosition().X - player.getMoveSpeed());
-			}
-
-			if (currentKeyboardState.IsKeyDown(Keys.Right))
-			{
-				player.setPositionX(player.getPosition().X + player.getMoveSpeed());
-			}
-
-			if (currentKeyboardState.IsKeyDown(Keys.Up))
-			{
-				player.setPositionY(player.getPosition().Y - player.getMoveSpeed());
-			}
-
-			if (currentKeyboardState.IsKeyDown(Keys.Down))
-			{
-				player.setPositionY(player.getPosition().Y + player.getMoveSpeed());
-			}
-
-			player.setPositionX(MathHelper.Clamp(player.getPosition().X, 0, GraphicsDevice.Viewport.Width - player.getWidth()));
-			player.setPositionY(MathHelper.Clamp(player.getPosition().Y, 0, GraphicsDevice.Viewport.Height - player.getHeight()));
-		}
-
-		/// <summary>
-		/// This is called when the game should draw itself.
-		/// </summary>
-		/// <param name="gameTime">Provides a snapshot of timing values.</param>
-		protected override void Draw(GameTime gameTime)
+        private void UpdatePlayer(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            if (currentKeyboardState.IsKeyDown(Keys.Left))
+            {
+                player.setPositionX(player.getPosition().X - player.getMoveSpeed());
+            }
 
-			// TODO: Add your drawing code here
-			spriteBatch.Begin();
-			player.Draw(spriteBatch);
-			spriteBatch.End();
+            if (currentKeyboardState.IsKeyDown(Keys.Right))
+            {
+                player.setPositionX(player.getPosition().X + player.getMoveSpeed());
+            }
 
-			base.Draw(gameTime);
+            if (currentKeyboardState.IsKeyDown(Keys.Up))
+            {
+                player.setPositionY(player.getPosition().Y - player.getMoveSpeed());
+            }
+
+            if (currentKeyboardState.IsKeyDown(Keys.Down))
+            {
+                player.setPositionY(player.getPosition().Y + player.getMoveSpeed());
+            }
+
+            player.setPositionX(MathHelper.Clamp(player.getPosition().X, 0, GraphicsDevice.Viewport.Width - player.getWidth()));
+            player.setPositionY(MathHelper.Clamp(player.getPosition().Y, 0, GraphicsDevice.Viewport.Height - player.getHeight()));
+        }
+
+        /// <summary>
+        /// This is called when the game should draw itself.
+        /// </summary>
+        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        protected override void Draw(GameTime gameTime)
+        {
+            GraphicsDevice.Clear(Color.Black);
+
+            // TODO: Add your drawing code here
+            spriteBatch.Begin();
+            player.Draw(spriteBatch);
+            spriteBatch.End();
+
+            base.Draw(gameTime);
         }
     }
 }

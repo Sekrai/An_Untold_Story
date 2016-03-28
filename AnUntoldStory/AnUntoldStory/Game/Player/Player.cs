@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 namespace AnUntoldStory
 {
 	class Player
-    {
+	{
 		private Texture2D PlayerTexture;
 		private Vector2 Position;
 		private float MoveSpeed;
