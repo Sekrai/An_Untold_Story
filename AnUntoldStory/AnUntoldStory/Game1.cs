@@ -11,8 +11,10 @@ namespace AnUntoldStory
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+		Player player;
+		
 
-        public Game1()
+		public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -26,10 +28,13 @@ namespace AnUntoldStory
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-
             base.Initialize();
-        }
+
+			// TODO: Add your initialization logic here
+			player = new Player();
+			Vector2 playerPosition = new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X + GraphicsDevice.Viewport.TitleSafeArea.Width / 2, GraphicsDevice.Viewport.TitleSafeArea.Y + GraphicsDevice.Viewport.TitleSafeArea.Height / 2);
+			player.Initialize(Content.Load<Texture2D>("Sprites\\Player"), playerPosition);
+		}
 
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
@@ -62,22 +67,26 @@ namespace AnUntoldStory
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
-
-            base.Update(gameTime);
+			// TODO: Add your update logic here
+			
+			base.Update(gameTime);
         }
 
-        /// <summary>
-        /// This is called when the game should draw itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        protected override void Draw(GameTime gameTime)
+
+		/// <summary>
+		/// This is called when the game should draw itself.
+		/// </summary>
+		/// <param name="gameTime">Provides a snapshot of timing values.</param>
+		protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+			// TODO: Add your drawing code here
+			spriteBatch.Begin();
+			player.Draw(spriteBatch);
+			spriteBatch.End();
 
-            base.Draw(gameTime);
+			base.Draw(gameTime);
         }
     }
 }
